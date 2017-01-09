@@ -1,6 +1,7 @@
 package com.hdsx.mq.sevice.impl;
 
 import com.hdsx.mq.sevice.SendMessage;
+import com.hdsx.mq.vo.Info;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.connection.SingleConnectionFactory;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.io.Serializable;
  * Created by admin on 2017/1/6.
  */
 @Service
-public class SendMessageImpl<T extends Serializable> implements SendMessage<T> {
+public class SendMessageImpl<T> implements SendMessage {
 
     @Resource
     @Qualifier("connectionFactory")
@@ -37,7 +38,7 @@ public class SendMessageImpl<T extends Serializable> implements SendMessage<T> {
 
 
 
-    public boolean sendMessageObject(String name, T o) throws JMSException {
+    public boolean sendMessageObject(String name, Object o) throws JMSException {
         if ("".equals(name) || name == null)
             new Throwable();
         Connection connection = factory.createConnection();
@@ -48,7 +49,7 @@ public class SendMessageImpl<T extends Serializable> implements SendMessage<T> {
         producer.setDeliveryMode(DeliveryMode.PERSISTENT);
         ObjectMessage objectMessage = session.createObjectMessage();
 
-        objectMessage.setObject(o);
+        objectMessage.setObject((Info) o);
         producer.send(objectMessage);
         return true;
     }

@@ -10,10 +10,10 @@
         ">
 
     <context:component-scan base-package="com.hdsx.mq" />
-
+    <context:property-placeholder  location="classpath:application.properties" />
 
     <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="tcp://localhost:61616" />
+        <property name="brokerURL" value="tcp://${MQUrl}" />
     </bean>
     <!-- 链接对象进行池化，提高效率，类似于jdbc中的 c3p0/druid等连接池 -->
     <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">

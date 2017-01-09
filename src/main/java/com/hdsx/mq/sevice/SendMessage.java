@@ -3,7 +3,7 @@ package com.hdsx.mq.sevice;
 import javax.jms.JMSException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
+
 
 
 /**

@@ -56,8 +56,8 @@ public class CreateQueueImpl implements CreateQueue, MessageListener {
     }*/
     public void onMessage(Message message) {
         try {
-            Info info = (Info)((ObjectMessage) message).getObject();
-            System.out.println(info.getContent());
+            Serializable object = ((ObjectMessage) message).getObject();
+            Info object1 = (Info) object;
         } catch (JMSException e) {
             e.printStackTrace();
         }
