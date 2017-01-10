@@ -5,9 +5,9 @@ target
 .idea
 
 .setting
-
+out
 *.iml
-
+META-INF
 /.idea/workspace.xml
 pom.xml.tag
 pom.xml.releaseBackup
@@ -21,3 +21,5 @@ buildNumber.properties
 # Exclude maven wrapper
 !/.mvn/wrapper/maven-wrapper.jar
 
+META-INF/
+out/

@@ -11,12 +11,13 @@ import javax.jms.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Created by admin on 2017/1/6.
  */
 @Service
-public class SendMessageImpl<T> implements SendMessage {
+public class SendMessageImpl implements SendMessage {
 
     @Resource
     @Qualifier("connectionFactory")
@@ -30,26 +31,25 @@ public class SendMessageImpl<T> implements SendMessage {
         Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
         Destination queue = session.createQueue(name);
         MessageProducer producer = session.createProducer(queue);
-        producer.setDeliveryMode(DeliveryMode.PERSISTENT);// 持久
+        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
         TextMessage message = session.createTextMessage(text);
         producer.send(message);
         return true;
     }
 
 
-
     public boolean sendMessageObject(String name, Object o) throws JMSException {
         if ("".equals(name) || name == null)
-            new Throwable();
+            return false;
         Connection connection = factory.createConnection();
         connection.start();
         Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
         Destination queue = session.createQueue(name);
         MessageProducer producer = session.createProducer(queue);
-        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
         ObjectMessage objectMessage = session.createObjectMessage();
 
-        objectMessage.setObject((Info) o);
+        objectMessage.setObject((Serializable) o);
         producer.send(objectMessage);
         return true;
     }
@@ -63,7 +63,7 @@ public class SendMessageImpl<T> implements SendMessage {
         Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
         Destination queue = session.createQueue(name);
         MessageProducer producer = session.createProducer(queue);
-        producer.setDeliveryMode(DeliveryMode.PERSISTENT);// 持久
+        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
         StreamMessage streamMessage = session.createStreamMessage();
         byte b[] = new byte[1024];
         int len = 0;
@@ -85,11 +85,25 @@ public class SendMessageImpl<T> implements SendMessage {
         Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
         Destination queue = session.createQueue(name);
         MessageProducer producer = session.createProducer(queue);
-        producer.setDeliveryMode(DeliveryMode.PERSISTENT);// 持久
+        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
         BytesMessage bytesMessage = session.createBytesMessage();
         bytesMessage.setJMSCorrelationIDAsBytes(bytes);
         producer.send(bytesMessage);
         return true;
     }
 
+    public boolean sendMessageMap(String name, Map map) throws JMSException {
+        if ("".equals(name) || name == null)
+            return false;
+        Connection connection = factory.createConnection();
+        connection.start();
+        Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
+        Destination queue = session.createQueue(name);
+        MessageProducer producer = session.createProducer(queue);
+        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+        MapMessage mapMessage = session.createMapMessage();
+        mapMessage.setObject("", "");
+        producer.send(mapMessage);
+        return true;
+    }
 }

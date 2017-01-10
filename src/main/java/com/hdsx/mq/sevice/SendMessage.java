@@ -3,13 +3,13 @@ package com.hdsx.mq.sevice;
 import javax.jms.JMSException;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.Map;
 
 
 /**
  * Created by admin on 2017/1/6.
  */
-public interface SendMessage<T> {
+public interface SendMessage {
 
     /**
      * 字符串
@@ -27,7 +27,7 @@ public interface SendMessage<T> {
      * @return
      * @throws JMSException
      */
-    boolean sendMessageObject(String name, T t) throws JMSException;
+    boolean sendMessageObject(String name, Object t) throws JMSException;
 
     /**
      * 字节流
@@ -49,4 +49,12 @@ public interface SendMessage<T> {
      */
     boolean sendMessageBytes(String name, byte[] bytes) throws JMSException, IOException;
 
+    /**
+     * Map
+     * @param name
+     * @param map
+     * @return
+     * @throws JMSException
+     */
+    boolean sendMessageMap(String name,Map map) throws JMSException;
 }
