@@ -15,7 +15,7 @@ import javax.jms.*;
 
 @Service
 @Component
-public class ConsumerImpl implements Consumer,MessageListener {
+public class ConsumerImpl implements Consumer{
 
     public void onMessage(Message message) {
         TextMessage textMsg = (TextMessage) message;

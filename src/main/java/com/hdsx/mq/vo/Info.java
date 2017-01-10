@@ -20,7 +20,7 @@ public class Info implements Serializable{
     /**
      * 内容
      */
-    private Map<String,Object> content;
+
 
     public String getRecipient() {
         return this.recipient;
@@ -38,20 +38,13 @@ public class Info implements Serializable{
         this.sender = sender;
     }
 
-    public Map<String, Object> getContent() {
-        return this.content;
-    }
-
-    public void setContent(Map<String, Object> content) {
-        this.content = content;
-    }
 
     @Override
     public String toString() {
         return "Info{" +
                 "recipient='" + recipient + '\'' +
                 ", sender='" + sender + '\'' +
-                ", content=" + content +
+
                 '}';
     }
 }

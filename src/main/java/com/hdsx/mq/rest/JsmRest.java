@@ -1,7 +1,7 @@
 package com.hdsx.mq.rest;
 
+import com.hdsx.mq.sevice.Consumer;
 import com.hdsx.mq.sevice.CreateQueue;
-import com.hdsx.mq.sevice.Product;
 import com.hdsx.mq.sevice.SendMessage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,33 +22,22 @@ import javax.jms.JMSException;
 @RequestMapping("jms")
 public class JsmRest {
 
-    @Resource
-    private Product product;
+
 
     @Resource
     private SendMessage sendMessage;
     @Resource
     private CreateQueue createQueue;
+    @Resource
+    private Consumer consumer;
 
-    @ApiOperation("发送消息")
-    @RequestMapping(value = "test", method = RequestMethod.GET)
-    public boolean sendMessage(@RequestParam(value = "json") String json) {
-        boolean flag = false;
-        try {
-            product.sendMessage(json);
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return flag;
-    }
 
     @ApiOperation("创建队列")
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public boolean createQueue(@RequestParam(value = "name") String name) {
         boolean flag = false;
         try {
-            createQueue.create(name);
+            createQueue.create(name,consumer);
             flag = true;
         } catch (Exception e) {
             e.printStackTrace();
