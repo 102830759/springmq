@@ -20,7 +20,8 @@ public class ConsumerImpl implements Consumer{
     public void onMessage(Message message) {
         TextMessage textMsg = (TextMessage) message;
         try {
-            System.out.println("消息内容是：" + textMsg.getText());
+            String text = textMsg.getText();
+            // 调用消息中间件，将消息推送到前台
         } catch (JMSException e) {
             e.printStackTrace();
         }
